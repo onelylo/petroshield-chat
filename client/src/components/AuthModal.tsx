@@ -24,7 +24,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onAuthenticate, error: aut
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [stayLoggedIn, setStayLoggedIn] = useState(() => {
-    try { return localStorage.getItem('vaultchat_stayLoggedIn') !== 'false'; } catch { return true; }
+    try { return localStorage.getItem('petroshield_stayLoggedIn') !== 'false'; } catch { return true; }
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -77,7 +77,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onAuthenticate, error: aut
               <ShieldCheck className="w-7 h-7" style={{ color: 'var(--accent-primary)' }} />
             </div>
             <h1 className="text-lg font-bold tracking-wider" style={{ color: 'var(--text-main)' }}>
-              VAULT<span style={{ color: 'var(--accent-primary)' }}>CHAT</span>
+              PetroShield
             </h1>
             <p className="text-[10px] mt-1" style={{ color: 'var(--text-muted)' }}>
               SECURE ENTERPRISE MESSENGER
@@ -235,7 +235,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onAuthenticate, error: aut
                     checked={stayLoggedIn}
                     onChange={e => {
                       setStayLoggedIn(e.target.checked);
-                      localStorage.setItem('vaultchat_stayLoggedIn', String(e.target.checked));
+                      localStorage.setItem('petroshield_stayLoggedIn', String(e.target.checked));
                     }}
                     className="w-3.5 h-3.5 rounded accent-[var(--accent-primary)]"
                   />

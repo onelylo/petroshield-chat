@@ -7,7 +7,7 @@ import type {
   ChannelKey
 } from '../types/chat';
 
-export class VaultChatDatabase extends Dexie {
+export class PetroShieldDatabase extends Dexie {
   keys!: Table<UserKeyPair, string>;
   messages!: Table<LocalMessage, string>;
   trustedKeys!: Table<TrustedKey, string>;
@@ -20,7 +20,7 @@ export class VaultChatDatabase extends Dexie {
   forwardedMessages!: Table<{ messageId: string }, string>;
 
   constructor() {
-    super('VaultChatDB');
+    super('PetroShieldDB');
 
     // v1-v4: legacy schemas (kept for migration)
     this.version(1).stores({ keys: 'userId, username, createdAt', messages: 'id, senderId, recipientId, timestamp, [senderId+recipientId]' });
@@ -84,7 +84,7 @@ export class VaultChatDatabase extends Dexie {
   }
 }
 
-export const db = new VaultChatDatabase();
+export const db = new PetroShieldDatabase();
 
 // ── User Key Pair ──────────────────────────────────────────────────────────────
 

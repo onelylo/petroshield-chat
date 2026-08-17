@@ -212,7 +212,7 @@ export const ChatArea: React.FC<ChatAreaProps> = ({
   useEffect(() => {
     if (!visibleMessages || visibleMessages.length === 0) return;
     const ids = visibleMessages.map(m => m.id);
-    const token = localStorage.getItem('vaultchat_jwt');
+    const token = localStorage.getItem('petroshield_jwt');
     if (!token) return;
     const controller = new AbortController();
     fetch(`${API_BASE}/api/reactions/batch`, {
@@ -293,7 +293,7 @@ export const ChatArea: React.FC<ChatAreaProps> = ({
   useEffect(() => {
     if (!visibleMessages || visibleMessages.length === 0) return;
     const ids = visibleMessages.map(m => m.id);
-    const token = localStorage.getItem('vaultchat_jwt');
+    const token = localStorage.getItem('petroshield_jwt');
     if (!token) return;
     fetch(`${API_BASE}/api/starred/batch`, {
       method: 'POST',
@@ -310,7 +310,7 @@ export const ChatArea: React.FC<ChatAreaProps> = ({
   }, [visibleMessages?.map(m => m.id).join(',')]);
 
   const handleToggleStar = useCallback(async (messageId: string, isStarred: boolean) => {
-    const token = localStorage.getItem('vaultchat_jwt');
+    const token = localStorage.getItem('petroshield_jwt');
     if (!token) return;
     if (isStarred) {
       setStarredSet(prev => { const next = new Set(prev); next.delete(messageId); return next; });
@@ -710,7 +710,7 @@ export const ChatArea: React.FC<ChatAreaProps> = ({
           ) : (
             <div className="flex items-center space-x-2 text-xs" style={{ color: 'var(--text-muted)' }}>
               <ShieldCheck className="w-4 h-4" style={{ color: 'var(--accent-primary)' }} />
-              <span className="font-bold">VAULTCHAT WORKSPACE</span>
+              <span className="font-bold">PETROSHIELD WORKSPACE</span>
             </div>
           )}
         </div>
@@ -1004,14 +1004,14 @@ export const ChatArea: React.FC<ChatAreaProps> = ({
           isBlocked={blockedUsers.has(inspectedUser.userId)}
           onBlock={async () => {
             await blockUser(inspectedUser.userId);
-            const token = localStorage.getItem('vaultchat_jwt');
+            const token = localStorage.getItem('petroshield_jwt');
             if (token) await fetch(`${API_BASE}/api/block/${inspectedUser.userId}`, { method: 'POST', headers: { Authorization: `Bearer ${token}` } }).catch(() => {});
             setBlockedUsers(prev => new Set(prev).add(inspectedUser.userId));
             onBlockUser?.(inspectedUser.userId);
           }}
           onUnblock={async () => {
             await unblockUser(inspectedUser.userId);
-            const token = localStorage.getItem('vaultchat_jwt');
+            const token = localStorage.getItem('petroshield_jwt');
             if (token) await fetch(`${API_BASE}/api/block/${inspectedUser.userId}`, { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } }).catch(() => {});
             setBlockedUsers(prev => { const next = new Set(prev); next.delete(inspectedUser.userId); return next; });
             onUnblockUser?.(inspectedUser.userId);
@@ -1028,14 +1028,14 @@ export const ChatArea: React.FC<ChatAreaProps> = ({
           isBlocked={blockedUsers.has(selectedUser.userId)}
           onBlock={async () => {
             await blockUser(selectedUser.userId);
-            const token = localStorage.getItem('vaultchat_jwt');
+            const token = localStorage.getItem('petroshield_jwt');
             if (token) await fetch(`${API_BASE}/api/block/${selectedUser.userId}`, { method: 'POST', headers: { Authorization: `Bearer ${token}` } }).catch(() => {});
             setBlockedUsers(prev => new Set(prev).add(selectedUser.userId));
             onBlockUser?.(selectedUser.userId);
           }}
           onUnblock={async () => {
             await unblockUser(selectedUser.userId);
-            const token = localStorage.getItem('vaultchat_jwt');
+            const token = localStorage.getItem('petroshield_jwt');
             if (token) await fetch(`${API_BASE}/api/block/${selectedUser.userId}`, { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } }).catch(() => {});
             setBlockedUsers(prev => { const next = new Set(prev); next.delete(selectedUser.userId); return next; });
             onUnblockUser?.(selectedUser.userId);

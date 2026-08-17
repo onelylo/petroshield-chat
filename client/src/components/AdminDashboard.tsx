@@ -80,7 +80,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   } | null>(null);
 
   const loadStats = useCallback(async () => {
-    const token = localStorage.getItem('vaultchat_jwt');
+    const token = localStorage.getItem('petroshield_jwt');
     if (!token) return;
     try {
       const [statsRes, healthRes] = await Promise.all([
@@ -151,7 +151,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   };
 
   const handleSaveUser = async (data: { userId: string; role: string; fullName: string; email?: string; username?: string; status: string; phone?: string; newPassword?: string; revokeKeys?: boolean }) => {
-    const token = localStorage.getItem('vaultchat_jwt') || sessionStorage.getItem('vaultchat_jwt');
+    const token = localStorage.getItem('petroshield_jwt') || sessionStorage.getItem('petroshield_jwt');
     if (!token) return;
 
     // Role change

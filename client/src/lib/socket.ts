@@ -13,7 +13,7 @@ export const socket: Socket = io(SERVER_URL, {
 
 /** Call this before each connect to ensure the latest JWT is sent */
 export function connectSocket() {
-  const token = localStorage.getItem('vaultchat_jwt') || sessionStorage.getItem('vaultchat_jwt');
+  const token = localStorage.getItem('petroshield_jwt') || sessionStorage.getItem('petroshield_jwt');
   socket.auth = { token };
   if (!socket.connected) {
     socket.connect();

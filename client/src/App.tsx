@@ -74,9 +74,9 @@ import { ChatArea } from './components/ChatArea';
 
 // ── JWT Storage Helpers ────────────────────────────────────────────────────
 function getJwtToken(): string | null {
-  const token = localStorage.getItem('vaultchat_jwt');
+  const token = localStorage.getItem('petroshield_jwt');
   if (token) return token;
-  return sessionStorage.getItem('vaultchat_jwt');
+  return sessionStorage.getItem('petroshield_jwt');
 }
 function isTokenExpired(): boolean {
   const token = getJwtToken();
@@ -89,16 +89,16 @@ function isTokenExpired(): boolean {
   }
 }
 function setJwtToken(token: string) {
-  const stayLoggedIn = localStorage.getItem('vaultchat_stayLoggedIn') !== 'false';
+  const stayLoggedIn = localStorage.getItem('petroshield_stayLoggedIn') !== 'false';
   if (stayLoggedIn) {
-    localStorage.setItem('vaultchat_jwt', token);
+    localStorage.setItem('petroshield_jwt', token);
   } else {
-    sessionStorage.setItem('vaultchat_jwt', token);
+    sessionStorage.setItem('petroshield_jwt', token);
   }
 }
 function removeJwtToken() {
-  localStorage.removeItem('vaultchat_jwt');
-  sessionStorage.removeItem('vaultchat_jwt');
+  localStorage.removeItem('petroshield_jwt');
+  sessionStorage.removeItem('petroshield_jwt');
 }
 import { AuthModal } from './components/AuthModal';
 import { OfflineBanner } from './components/OfflineBanner';
@@ -130,7 +130,7 @@ export const App: React.FC = () => {
   const [authError, setAuthError] = useState<string | null>(null);
   const [isRehydrating, setIsRehydrating] = useState(true);
   const [theme, setTheme] = useState<string>(() => {
-    const guestSaved = localStorage.getItem('vaultchat_theme_guest');
+    const guestSaved = localStorage.getItem('petroshield_theme_guest');
     if (guestSaved && guestSaved !== 'undefined') {
       document.documentElement.setAttribute('data-theme', guestSaved);
       return guestSaved;
@@ -138,7 +138,7 @@ export const App: React.FC = () => {
     const prefersDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches;
     const initial = prefersDark ? 'vault-dark' : 'clean-light';
     document.documentElement.setAttribute('data-theme', initial);
-    localStorage.setItem('vaultchat_theme_guest', initial);
+    localStorage.setItem('petroshield_theme_guest', initial);
     return initial;
   });
   const [showAdmin, setShowAdmin] = useState(false);
@@ -153,7 +153,7 @@ export const App: React.FC = () => {
   useEffect(() => {
     const userId = currentUserKeys?.userId;
     if (userId) {
-      const saved = localStorage.getItem(`vaultchat_theme_${userId}`);
+      const saved = localStorage.getItem(`petroshield_theme_${userId}`);
       if (saved && saved !== 'undefined') {
         document.documentElement.setAttribute('data-theme', saved);
         setTheme(saved);
@@ -164,7 +164,7 @@ export const App: React.FC = () => {
   // Persist theme changes
   useEffect(() => {
     const userId = currentUserKeys?.userId || 'guest';
-    localStorage.setItem(`vaultchat_theme_${userId}`, theme);
+    localStorage.setItem(`petroshield_theme_${userId}`, theme);
   }, [theme, currentUserKeys?.userId]);
 
   // ── Directory & Presence ─────────────────────────────────────────────────────
@@ -181,7 +181,7 @@ export const App: React.FC = () => {
   // ── Navigation & Workspace State ──────────────────────────────────────────────
   const [activeView, setActiveView] = useState<'channels' | 'dms'>(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('vaultchat_activeView');
+      const saved = localStorage.getItem('petroshield_activeView');
       if (saved === 'channels' || saved === 'dms') return saved;
     }
     return 'dms';
@@ -203,15 +203,15 @@ export const App: React.FC = () => {
   const [uploadProgress, setUploadProgress] = useState<number | null>(null);
   const [unreadDMs, setUnreadDMs] = useState<Record<string, number>>({});
   const [lastViewedDms, setLastViewedDms] = useState<Record<string, number>>(() => {
-    try { return JSON.parse(localStorage.getItem('vaultchat_lastViewedDms') || '{}'); } catch { return {}; }
+    try { return JSON.parse(localStorage.getItem('petroshield_lastViewedDms') || '{}'); } catch { return {}; }
   });
   const [unreadChannels, setUnreadChannels] = useState<Record<string, number>>({});
   const [lastViewedChannels, setLastViewedChannels] = useState<Record<string, number>>(() => {
-    try { return JSON.parse(localStorage.getItem('vaultchat_lastViewedChannels') || '{}'); } catch { return {}; }
+    try { return JSON.parse(localStorage.getItem('petroshield_lastViewedChannels') || '{}'); } catch { return {}; }
   });
   // Persist activeView (dms/channels) to localStorage
   useEffect(() => {
-    localStorage.setItem('vaultchat_activeView', activeView);
+    localStorage.setItem('petroshield_activeView', activeView);
   }, [activeView]);
   const [latestDMMessages, setLatestDMMessages] = useState<Record<string, string>>({});
   const [pinnedMessages, setPinnedMessages] = useState<Record<string, { messageId: string; pinnedBy: string; pinnedAt: number }[]>>({});
@@ -999,7 +999,7 @@ export const App: React.FC = () => {
       keyPair = {
         userId, username: username.trim(),
         fullName: fullName || username.trim(),
-        email: email || `${username.toLowerCase()}@vaultchat.internal`,
+        email: email || `${username.toLowerCase()}@petroshield.internal`,
         role, publicKeyBase64: pubKeyBase64,
         privateKeyJwk: privJwk, publicKeyJwk: pubJwk,
         signingPublicKeyBase64: signPub,
@@ -1130,7 +1130,7 @@ export const App: React.FC = () => {
         keyPair = {
           userId, username: username.trim(),
           fullName: serverUser.fullName || username.trim(),
-          email: serverUser.email || `${username.toLowerCase()}@vaultchat.internal`,
+          email: serverUser.email || `${username.toLowerCase()}@petroshield.internal`,
           role: serverUser.role || role,
           publicKeyBase64: pubKeyBase64,
           privateKeyJwk: privJwk, publicKeyJwk: pubJwk,
@@ -1517,8 +1517,8 @@ export const App: React.FC = () => {
     const onUserSuspended = (data: { reason?: string }) => {
       // Force logout on suspension
       if (socket.connected) socket.disconnect();
-      localStorage.removeItem('vaultchat_jwt');
-      sessionStorage.removeItem('vaultchat_jwt');
+      localStorage.removeItem('petroshield_jwt');
+      sessionStorage.removeItem('petroshield_jwt');
       setCurrentUserKeys(null);
       // Show suspension message before reloading
       showToast(data?.reason || 'Your account has been suspended by an administrator.', 'error');
@@ -1528,8 +1528,8 @@ export const App: React.FC = () => {
     const onPasswordChanged = () => {
       // Force logout on password change from another session
       if (socket.connected) socket.disconnect();
-      localStorage.removeItem('vaultchat_jwt');
-      sessionStorage.removeItem('vaultchat_jwt');
+      localStorage.removeItem('petroshield_jwt');
+      sessionStorage.removeItem('petroshield_jwt');
       setCurrentUserKeys(null);
       showToast('Your password was changed. Please log in again.', 'warning');
       window.location.reload();
@@ -1788,11 +1788,11 @@ export const App: React.FC = () => {
   // ── Compute unread DMs & Channels ───────────────────────────────────────────
   // Persist to localStorage
   useEffect(() => {
-    localStorage.setItem('vaultchat_lastViewedDms', JSON.stringify(lastViewedDms));
+    localStorage.setItem('petroshield_lastViewedDms', JSON.stringify(lastViewedDms));
   }, [lastViewedDms]);
 
   useEffect(() => {
-    localStorage.setItem('vaultchat_lastViewedChannels', JSON.stringify(lastViewedChannels));
+    localStorage.setItem('petroshield_lastViewedChannels', JSON.stringify(lastViewedChannels));
   }, [lastViewedChannels]);
 
   useEffect(() => {
@@ -2655,7 +2655,7 @@ export const App: React.FC = () => {
     return (
       <div className="h-screen w-screen flex flex-col items-center justify-center" style={{ backgroundColor: 'var(--bg-app)', color: 'var(--text-muted)' }}>
         <div className="w-12 h-12 rounded-full animate-spin mb-4" style={{ border: '2px solid var(--accent-primary)', borderTopColor: 'transparent' }} />
-        <p className="text-xs tracking-widest">REHYDRATING VAULTCHAT SESSION…</p>
+        <p className="text-xs tracking-widest">REHYDRATING PETROSHIELD SESSION…</p>
       </div>
     );
   }

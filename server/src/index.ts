@@ -431,7 +431,7 @@ function userToActive(data: { userId: string; username: string; fullName?: strin
   const role: UserRole = (regUser?.role as UserRole) || 'MEMBER';
   const username = regUser?.username || data.username;
   const fullName = regUser?.fullName || data.fullName || username;
-  const email = regUser?.email || `${username}@vaultchat.internal`;
+  const email = regUser?.email || `${username}@petroshield.internal`;
   const avatarUrl = regUser?.avatarUrl || data.avatarUrl || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(fullName.trim())}`;
   const publicKey = regUser?.publicKey || data.publicKey;
   return {
@@ -620,7 +620,7 @@ app.post('/api/auth/register', authLimiter, async (req, res) => {
       userId,
       username: username.trim(),
       fullName: (fullName || username).trim(),
-      email: (email || `${normalized}@vaultchat.internal`).trim(),
+      email: (email || `${normalized}@petroshield.internal`).trim(),
       role: userRole,
       passwordHash: await hashPassword(password),
       publicKey,
@@ -1150,7 +1150,7 @@ app.get('/api/url-preview', async (req, res) => {
     const timeout = setTimeout(() => controller.abort(), 5000);
 
     const response = await fetch(url, {
-      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; VaultChat/1.0)' },
+      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; PetroShield/1.0)' },
       signal: controller.signal,
     });
     clearTimeout(timeout);
@@ -2426,7 +2426,7 @@ async function boot() {
 
   server.listen(PORT, () => {
     console.log(`\n================================================`);
-    console.log(`  VaultChat Enterprise E2EE — Port ${PORT}`);
+    console.log(`  PetroShield Enterprise E2EE — Port ${PORT}`);
     console.log(`  Roles: ADMIN | SUPERVISOR | MEMBER`);
     console.log(`  Database: PostgreSQL (persistent)`);
     console.log(`  APIs: /api/users  /api/messages  /api/messages/direct/:id`);

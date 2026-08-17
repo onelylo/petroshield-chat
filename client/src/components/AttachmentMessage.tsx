@@ -46,7 +46,7 @@ export const AttachmentMessage: React.FC<AttachmentMessageProps> = ({ message, i
   }, []);
 
   const fetchDecryptedUrl = async (): Promise<string> => {
-    const token = localStorage.getItem('vaultchat_jwt') || sessionStorage.getItem('vaultchat_jwt');
+    const token = localStorage.getItem('petroshield_jwt') || sessionStorage.getItem('petroshield_jwt');
     const key = await resolveKey(message);
     if (!token || !key || !message.attachment) throw new Error('Decryption key unavailable');
     try {
@@ -61,7 +61,7 @@ export const AttachmentMessage: React.FC<AttachmentMessageProps> = ({ message, i
   };
 
   const decryptAndOpen = async () => {
-    const token = localStorage.getItem('vaultchat_jwt') || sessionStorage.getItem('vaultchat_jwt');
+    const token = localStorage.getItem('petroshield_jwt') || sessionStorage.getItem('petroshield_jwt');
     const key = await resolveKey(message);
     if (!token || !key || !message.attachment) {
       setError('Decryption key unavailable');

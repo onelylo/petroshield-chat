@@ -1,5 +1,5 @@
 /**
- * VaultChat PostgreSQL Persistence Layer
+ * PetroShield PostgreSQL Persistence Layer
  * Uses `embedded-postgres` to run a real, file-backed PostgreSQL 18 cluster
  * locally (data survives server restarts). All application state lives in the
  * `postgres` database defined by `schema.sql` — no in-memory state stores.
@@ -17,9 +17,9 @@ const { Pool } = pg;
 
 const DB_DIR = process.env.VAULTCHAT_PGDATA || path.join(__dirname, '..', '..', '.pgdata');
 const DB_PORT = Number(process.env.VAULTCHAT_PGPORT || 5433);
-const DB_USER = process.env.VAULTCHAT_PGUSER || 'vaultchat';
+const DB_USER = process.env.VAULTCHAT_PGUSER || 'petroshield';
 const DB_PASS = process.env.VAULTCHAT_PGPASSWORD || crypto.randomBytes(16).toString('hex');
-const UPLOADS_DIR = process.env.VAULTCHAT_UPLOADS || path.join(__dirname, '..', '..', 'uploads');
+const UPLOADS_DIR = process.env.PETROSHIELD_UPLOADS || path.join(__dirname, '..', '..', 'uploads');
 
 let pool: pg.Pool | null = null;
 let embedded: EmbeddedPostgres | null = null;
@@ -178,7 +178,7 @@ async function seedAdminAccount(): Promise<void> {
   await getPool().query(
     `INSERT INTO users (id, username, full_name, email, role, password_hash, public_key, status, created_at)
      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
-    [userId, username, 'Onelylo', 'admin@vaultchat.local', 'ADMIN', passwordHash, '', 'ACTIVE', createdAt]
+    [userId, username, 'Onelylo', 'admin@petroshield.local', 'ADMIN', passwordHash, '', 'ACTIVE', createdAt]
   );
   console.log(`[DB] Seeded admin account: ${username} (${userId})`);
 }

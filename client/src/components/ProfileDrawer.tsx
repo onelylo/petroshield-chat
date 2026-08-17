@@ -61,8 +61,8 @@ export const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
   const [saved, setSaved] = useState(false);
   const [shaking, setShaking] = useState(false);
   const [activeTab, setActiveTab] = useState<TabId>('profile');
-  const [soundEnabled, setSoundEnabled] = useState(localStorage.getItem('vaultchat_sound') !== 'false');
-  const [notificationsEnabled, setNotificationsEnabled] = useState(localStorage.getItem('vaultchat_notifications') !== 'false');
+  const [soundEnabled, setSoundEnabled] = useState(localStorage.getItem('petroshield_sound') !== 'false');
+  const [notificationsEnabled, setNotificationsEnabled] = useState(localStorage.getItem('petroshield_notifications') !== 'false');
   const [copiedFingerprint, setCopiedFingerprint] = useState(false);
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -72,11 +72,11 @@ export const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    localStorage.setItem('vaultchat_sound', String(soundEnabled));
+    localStorage.setItem('petroshield_sound', String(soundEnabled));
   }, [soundEnabled]);
 
   useEffect(() => {
-    localStorage.setItem('vaultchat_notifications', String(notificationsEnabled));
+    localStorage.setItem('petroshield_notifications', String(notificationsEnabled));
     if (notificationsEnabled && Notification.permission === 'default') {
       Notification.requestPermission();
     }
@@ -117,7 +117,7 @@ export const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
     try {
       let finalAvatarUrl = avatarUrl;
       if (avatarUrl?.startsWith('data:')) {
-        const token = localStorage.getItem('vaultchat_jwt');
+        const token = localStorage.getItem('petroshield_jwt');
         if (token) {
           const res = await fetch(`${API_BASE}/api/users/me/avatar`, {
             method: 'POST',
@@ -140,7 +140,7 @@ export const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
   const handleThemeChange = (themeName: string) => {
     document.documentElement.setAttribute('data-theme', themeName);
     const userId = currentUser?.userId || 'guest';
-    localStorage.setItem(`vaultchat_theme_${userId}`, themeName);
+    localStorage.setItem(`petroshield_theme_${userId}`, themeName);
     onThemeChange(themeName);
   };
 
@@ -148,7 +148,7 @@ export const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
     if (!currentPassword || !newPassword) return;
     setPasswordSaving(true);
     try {
-      const token = localStorage.getItem('vaultchat_jwt');
+      const token = localStorage.getItem('petroshield_jwt');
       const res = await fetch(`${API_BASE}/api/auth/password`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },

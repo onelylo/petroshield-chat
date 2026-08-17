@@ -9,7 +9,7 @@ interface LinkPreviewData {
   image: string | null;
 }
 
-const PREVIEW_CACHE_KEY = 'vaultchat_linkPreviews';
+const PREVIEW_CACHE_KEY = 'petroshield_linkPreviews';
 const PREVIEW_CACHE_MAX = 200;
 const previewCache = new Map<string, LinkPreviewData>();
 
@@ -40,7 +40,7 @@ export const LinkPreview: React.FC<{ url: string }> = ({ url }) => {
 
     let cancelled = false;
     setLoading(true);
-    const token = localStorage.getItem('vaultchat_jwt');
+    const token = localStorage.getItem('petroshield_jwt');
     fetch(`${API_BASE}/api/url-preview?url=${encodeURIComponent(url)}`, {
       headers: token ? { Authorization: `Bearer ${token}` } : {},
     })

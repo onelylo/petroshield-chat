@@ -1,5 +1,5 @@
 /**
- * VaultChat Encrypted Attachment Pipeline
+ * PetroShield Encrypted Attachment Pipeline
  * - uploadEncryptedAttachment: POST encrypted bytes + metadata to the server
  * - downloadEncryptedAttachment: fetch encrypted binary payload by id
  * - generateImageThumbnail: client-side canvas downscale (max 300px) for previews

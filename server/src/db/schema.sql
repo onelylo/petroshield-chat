@@ -1,4 +1,4 @@
--- VaultChat Enterprise E2EE — PostgreSQL Schema
+-- PetroShield Enterprise E2EE — PostgreSQL Schema
 -- All application state persists here so the server can restart without data loss.
 
 CREATE TABLE IF NOT EXISTS users (

@@ -225,7 +225,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         {!isCollapsed && (
           <div className="flex items-center space-x-2.5 overflow-hidden">
             <div
-              title="VaultChat Enterprise E2EE"
+              title="PetroShield Enterprise E2EE"
               className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 cursor-pointer transition-smooth"
               style={{ 
                 backgroundColor: 'color-mix(in srgb, var(--accent-primary) 10%, transparent)',
@@ -236,7 +236,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             </div>
             <div className="flex flex-col truncate">
               <span className="font-bold text-sm tracking-wide" style={{ color: 'var(--text-main)' }}>
-                VAULT<span style={{ color: 'var(--accent-primary)' }}>CHAT</span>
+                PetroShield
               </span>
               <span className="text-[9px] font-bold tracking-widest" style={{ color: '#34d399' }}>
                 E2EE SECURE
